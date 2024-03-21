@@ -1774,7 +1774,7 @@ def prepare4model_v03_img(img, cluster=True, input_len=1223, right_only=False, d
 
     repeat = False
     for coords in [flipped,coords.copy()]: # for flipped and right side
-        if 1:
+        if 0:
             plt.title('check')
             plt.plot(coords[:,0],coords[:,1])
             plt.show()
@@ -1790,17 +1790,19 @@ def prepare4model_v03_img(img, cluster=True, input_len=1223, right_only=False, d
         coordinates = []
 
         # if image is too large and contour is too long, decrease image resolution
-        if len(X)>input_len:
+        max_contour_len = 599
+        if len(X)>max_contour_len: # was input_len but was lowered to the max scaler 2 contour len
             if display==True:
                 plt.plot(X,Z)
                 plt.title('half-drop contour, length of '+str(len(X)))
                 plt.show()
                 plt.close()
 
+                target_dpi = 100
                 print("Contour of length "+str(len(X))+" is too long for the designated output dimensionality of ("+str(input_len)+",2)")
-                print("reducing image resolution to 128 dpi...")
+                print("reducing image resolution to "+str(target_dpi)+" dpi...")
 
-                img = save_to_new_dpi(img, dpi=128)
+                img = save_to_new_dpi(img, dpi=target_dpi)
                 repeat = True
                 break
 
@@ -1872,7 +1874,7 @@ def prepare4model_v03_img(img, cluster=True, input_len=1223, right_only=False, d
         flipped = np.copy(coords)
         flipped[:,0] = -coords[:,0]
         for coords in [flipped,coords.copy()]: # for flipped and right side
-            if 1:
+            if 0:
                 plt.title('check')
                 plt.plot(coords[:,0],coords[:,1])
                 plt.show()
@@ -1888,7 +1890,7 @@ def prepare4model_v03_img(img, cluster=True, input_len=1223, right_only=False, d
             coordinates = []
 
             # if image is too large and contour is too long, decrease image resolution
-            if len(X)>input_len:
+            if len(X)>max_contour_len:
                 if display==True:
                     plt.plot(X,Z)
                     plt.title('half-drop contour, length of '+str(len(X)))

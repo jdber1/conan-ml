@@ -73,9 +73,9 @@ def main():
     if user_inputs.ML_boole == True:
         from modules.ML_model.prepare_experimental import prepare4model_v03, experimental_pred
         import tensorflow as tf
+        tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR) # to minimise tf warnings
         model_path = './modules/ML_model/'
         model = tf.keras.models.load_model(model_path)
-        #model = tf.keras.Model.load_weights(model_path).expect_partial()
 
     n_frames = user_inputs.number_of_frames
     extracted_data = ExtractedData(n_frames, fitted_drop_data.parameter_dimensions)
@@ -113,7 +113,7 @@ def main():
             extracted_data.initial_image_time = raw_experiment.time
             filename = user_inputs.filename[:-4] + '_' + user_inputs.time_string + ".csv"
             export_filename = os.path.join(user_inputs.directory_string, filename)
-        #print("HERE!!")
+
         set_surface_line(raw_experiment, user_inputs) #fits performed here if baseline_method is User-selected
 
         # these methods don't need tilt correction
