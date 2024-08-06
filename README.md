@@ -4,7 +4,8 @@ Conan-ML software is a tool engineered for precise and automated
 processing and analysis of contact angle data. The software utilizes image
 processing algorithms to analyze captured images of droplets on surfaces.
 Current implementation is only optimised for high angle systems. More information
-about the method and accuracy is available here: https://doi.org/10.26434/chemrxiv-2024-6nhr1
+about the method and accuracy is available here: 
+[https://doi.org/10.26434/chemrxiv-2024-6nhr1](https://doi.org/10.1021/acs.langmuir.4c01050)
 
 # Dependencies
 
