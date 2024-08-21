@@ -4,7 +4,7 @@ Conan-ML software is a tool engineered for precise and automated
 processing and analysis of contact angle data. The software utilizes image
 processing algorithms to analyze captured images of droplets on surfaces.
 Current implementation is only optimised for high angle systems. More information
-about the method and accuracy is available here: 
+about the method and accuracy is available here:
 https://doi.org/10.1021/acs.langmuir.4c01050
 
 # Dependencies
@@ -15,9 +15,14 @@ listed in requirements.txt and can be install using
 
 pip install -r requirements.txt
 
+Linux might also need tkinter:
+sudo dnf install python3.10-tkinter
+or
+sudo apt-get install python3.10-tk
+
 # Usage
 
-To load  Conan-ML GUI run the conan.py file using
+To load Conan-ML GUI run the conan.py file using
 
 python conan.py
 

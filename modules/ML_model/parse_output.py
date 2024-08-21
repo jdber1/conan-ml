@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 
 # define paths and flags
 src = './output_post_loadedweights.txt'
-file1 = open(src,"rb")
+file1 = open(src, "rb")
 
 parse_to_pkl = False
 
@@ -13,9 +13,9 @@ check_history_save = True
 generate_plots = True
 show_restart_points = True
 display = False
-save_path = './training_history_all.png' # set to None if not saving
+save_path = './training_history_all.png'  # set to None if not saving
 
-if parse_to_pkl: # save history to pkl file
+if parse_to_pkl:  # save history to pkl file
     history = {}
     loss = []
     mae = []
@@ -27,7 +27,7 @@ if parse_to_pkl: # save history to pkl file
 
     for i, line in enumerate(file1):
         line = str(line)
-        #if i<15:
+        # if i<15:
         if 1:
             if 'dataset loaded...' in line:
                 restart_point = True
@@ -42,8 +42,8 @@ if parse_to_pkl: # save history to pkl file
                 if restart_point == True:
                     restart_points.append(len(mae))
                     restart_point = False
-            #if 'Epoch' in line:
-                #print(line.split(' '))
+            # if 'Epoch' in line:
+                # print(line.split(' '))
         else:
             break
 
@@ -58,8 +58,8 @@ if parse_to_pkl: # save history to pkl file
     with open('history' + '.pkl', 'wb') as f:
         pickle.dump(history, f, pickle.HIGHEST_PROTOCOL)
 
-if check_history_save: #check history save
-    def load_obj(name ):
+if check_history_save:  # check history save
+    def load_obj(name):
         with open(name + '.pkl', 'rb') as f:
             return pickle.load(f)
 
@@ -69,11 +69,11 @@ if check_history_save: #check history save
     for key in history.keys():
         print(key+' shape: '+str(len(history[key])))
 
-if generate_plots: # generate plots using data
+if generate_plots:  # generate plots using data
 
     import matplotlib.pyplot as plt
 
-    def load_obj(name ):
+    def load_obj(name):
         with open(name + '.pkl', 'rb') as f:
             return pickle.load(f)
 
@@ -90,13 +90,13 @@ if generate_plots: # generate plots using data
 
     restart_points = history['restart_points']
 
-    if 0: #check lists
+    if 0:  # check lists
         print(mae)
         for thing in mae:
             if thing > 10:
                 print(thing)
 
-    epochs_range = range(len(history['loss']))#range(epochs)
+    epochs_range = range(len(history['loss']))  # range(epochs)
 
     plt.figure(figsize=(20, 10))
 
@@ -105,12 +105,14 @@ if generate_plots: # generate plots using data
     plt.plot(epochs_range, mae, label='Training MAE')
     if show_restart_points == True:
         for i, point in enumerate(restart_points):
-            if i==0:
-                plt.plot([point,point], [min(mae),max(mae)],'r',label='Restart Points')
+            if i == 0:
+                plt.plot([point, point], [min(mae), max(mae)],
+                         'r', label='Restart Points')
             else:
-                plt.plot([point,point], [min(mae),max(mae)],'r')
+                plt.plot([point, point], [min(mae), max(mae)], 'r')
     plt.legend(loc='upper right')
-    plt.title('Training and Validation MAE\nFinal training MAE: '+str(mae[-1])+'\nFinal val MAE: '+str(val_mae[-1]))
+    plt.title('Training and Validation MAE\nFinal training MAE: ' +
+              str(mae[-1])+'\nFinal val MAE: '+str(val_mae[-1]))
     plt.yscale('log')
     plt.xscale('log')
     plt.ylabel('Mean Absolute Error')
@@ -121,13 +123,15 @@ if generate_plots: # generate plots using data
     plt.plot(epochs_range, mse, label='Training MSE')
     if show_restart_points == True:
         for i, point in enumerate(restart_points):
-            if i==0:
-                plt.plot([point,point], [min(mse),max(mse)],'r',label='Restart Points')
+            if i == 0:
+                plt.plot([point, point], [min(mse), max(mse)],
+                         'r', label='Restart Points')
             else:
-                plt.plot([point,point], [min(mse),max(mse)],'r')
+                plt.plot([point, point], [min(mse), max(mse)], 'r')
     plt.legend(loc='upper right')
     plt.title('Training and Validation MSE')
-    plt.title('Training and Validation MSE\nFinal training MSE: '+str(mse[-1])+'\nFinal val MSE: '+str(val_mse[-1]))
+    plt.title('Training and Validation MSE\nFinal training MSE: ' +
+              str(mse[-1])+'\nFinal val MSE: '+str(val_mse[-1]))
     plt.yscale('log')
     plt.xscale('log')
     plt.ylabel('Mean Squared Error')
@@ -135,18 +139,19 @@ if generate_plots: # generate plots using data
 
     plt.subplot(1, 3, 3)
 
-
     plt.plot(epochs_range, val_loss, label='Validation Loss')
     plt.plot(epochs_range, loss, label='Training Loss')
     if show_restart_points == True:
         for i, point in enumerate(restart_points):
-            if i==0:
-                plt.plot([point,point], [min(loss),max(loss)],'r',label='Restart Points')
+            if i == 0:
+                plt.plot([point, point], [min(loss), max(loss)],
+                         'r', label='Restart Points')
             else:
-                plt.plot([point,point], [min(loss),max(loss)],'r')
+                plt.plot([point, point], [min(loss), max(loss)], 'r')
     plt.legend(loc='upper right')
     plt.title('Training and Validation Loss')
-    plt.title('Training and Validation loss\nFinal training loss: '+str(loss[-1])+'\nFinal val loss: '+str(val_loss[-1]))
+    plt.title('Training and Validation loss\nFinal training loss: ' +
+              str(loss[-1])+'\nFinal val loss: '+str(val_loss[-1]))
     plt.yscale('log')
     plt.xscale('log')
     plt.ylabel('Loss')
