@@ -2,10 +2,11 @@
 # coding=utf-8
 from .de_YoungLaplace import ylderiv
 from .de_YoungLaplace import dataderiv
-#from .interpolation_function import cubic_interpolation_function
+# from .interpolation_function import cubic_interpolation_function
 from scipy.integrate import odeint
 
 import numpy as np
+
 
 class Tolerances(object):
     def __init__(self, delta_tol, gradient_tol, maximum_fitting_steps, objective_tol, arclength_tol, maximum_arclength_steps, needle_tol, needle_steps):
@@ -56,6 +57,7 @@ class ExperimentalSetup(object):
         self.drop_region = None
         self.needle_region = None
 
+
 class ExperimentalDrop(object):
     def __init__(self):
         self.image = None
@@ -104,37 +106,38 @@ class DropData(object):
         # self.number_experiments = None
         # self.wait_time = None
 
-
-    if 0:# interpolates the theoretical profile data
+    if 0:  # interpolates the theoretical profile data
         def profile(self, s):
             if (s < 0):
                 raise ValueError("s value outside domain")
             if (s > self.max_s):
                 # if the profile is called outside of the current region, expand
-                self.max_s = 1.2 * s # expand region to include s_max
+                self.max_s = 1.2 * s  # expand region to include s_max
             Delta_s = self.max_s / self.s_points
             n1 = int(s / Delta_s)
             n2 = n1 + 1
-            t =  s / Delta_s - n1
+            t = s / Delta_s - n1
             vec1 = np.array(self.theoretical_data[n1])
             vec2 = np.array(self.theoretical_data[n2])
             bond_number = self.bond()
             Dvec1 = np.array(ylderiv(vec1, 0, bond_number))
             Dvec2 = np.array(ylderiv(vec2, 0, bond_number))
-            value_at_s = cubic_interpolation_function(vec1, vec2, Dvec1, Dvec2, Delta_s, t)
+            value_at_s = cubic_interpolation_function(
+                vec1, vec2, Dvec1, Dvec2, Delta_s, t)
             return value_at_s
 
     # generates a new drop profile
     def generate_profile_data(self):
         if (self._max_s is not None) and (self._s_points is not None) and (self._params is not None):
-        # if [self.max_s, self.s_points, self.params].all():
+            # if [self.max_s, self.s_points, self.params].all():
             # self.fitted = False
             # s_data_points = np.arange(0, self.max_s*(1+2/self.s_points), self.max_s/self.s_points)
             s_data_points = np.linspace(0, self.max_s, self.s_points + 1)
 
             x_vec_initial = [.000001, 0., 0., 0., 0., 0.]
             bond_number = self.bond()
-            self.theoretical_data = odeint(ylderiv, x_vec_initial, s_data_points, args=(bond_number,))
+            self.theoretical_data = odeint(
+                ylderiv, x_vec_initial, s_data_points, args=(bond_number,))
 
     # # generates a new drop profile
     # def generate_profile_volume_area_data(self):
@@ -161,8 +164,8 @@ class DropData(object):
     # def s_needle(self):
     #     return 100
 
-
     # generate new profile when params are changed
+
     @property
     def params(self):
         return self._params
@@ -172,7 +175,7 @@ class DropData(object):
         if len(vector) != self.parameter_dimensions:
             raise ValueError("Parameter array incorrect dimensions")
         self._params = vector
-        self.generate_profile_data() # generate new profile when the parameters are changed
+        self.generate_profile_data()  # generate new profile when the parameters are changed
 
     # generate new profile when max_s is changed
     @property
@@ -184,7 +187,8 @@ class DropData(object):
         if value <= 0:
             raise ValueError("Maximum arc length must be positive")
         self._max_s = float(value)
-        self.generate_profile_data() # generate new profile when the maximum arc length is changed
+        # generate new profile when the maximum arc length is changed
+        self.generate_profile_data()
 
     # test validity of variable s_points + generate new profile when s_points are
     @property
@@ -198,7 +202,8 @@ class DropData(object):
         if not isinstance(value, int):
             raise ValueError("Number of points must be an integer")
         self._s_points = value
-        self.generate_profile_data() # generate new profile when the maximum arc length is changed
+        # generate new profile when the maximum arc length is changed
+        self.generate_profile_data()
 
     # def calculate_interfacial_tension(self):
     #     if self.fitted:

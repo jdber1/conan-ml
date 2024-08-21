@@ -1,22 +1,27 @@
 #!/usr/bin/env python
-#coding=utf-8
+# coding=utf-8
 
 from math import pi
 from numpy import sin, cos
 
 # minimise calls to sin() and cos()
 # defines the Young--Laplace system of differential equations to be solved
+
+
 def ylderiv(x_vec, t, bond_number):
     x, y, phi, x_Bond, y_Bond, phi_Bond = x_vec
     x_s = cos(phi)
     y_s = sin(phi)
-    phi_s = 2 + bond_number * y - y_s/x #DS 16/09 2- made 2+ for contact angle
+    phi_s = 2 + bond_number * y - y_s/x  # DS 16/09 2- made 2+ for contact angle
     x_Bond_s = - y_s * phi_Bond
     y_Bond_s = x_s * phi_Bond
-    phi_Bond_s = y_s * x_Bond / (x*x) - x_s * phi_Bond / x - y - bond_number * y_Bond
+    phi_Bond_s = y_s * x_Bond / (x*x) - x_s * \
+        phi_Bond / x - y - bond_number * y_Bond
     return [x_s, y_s, phi_s, x_Bond_s, y_Bond_s, phi_Bond_s]
 
 # defines the Young--Laplace system of differential equations to be solved
+
+
 def dataderiv(x_vec, t, bond_number):
     x, y, phi, vol, sur = x_vec
     x_s = cos(phi)

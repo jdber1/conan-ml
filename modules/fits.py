@@ -1,17 +1,19 @@
 #!/usr/bin/env python
-#coding=utf-8
+# coding=utf-8
 from __future__ import print_function
 import numpy as np
 import cv2
 import matplotlib.pyplot as plt
-from sklearn.cluster import OPTICS # DS 7/6/21 - for clustering algorithm
+from sklearn.cluster import OPTICS  # DS 7/6/21 - for clustering algorithm
 import time
 import datetime
+
 
 def perform_fits(experimental_drop, tangent=False, polynomial=False, circle=False, ellipse=False, YL=False):
     if tangent == True:
         from .polynomial_fit import polynomial_fit
-        tangent_angles, tangent_CPs, tangent_lines, tangent_errors, tangent_timings = polynomial_fit(experimental_drop.drop_contour, polynomial_degree=1)
+        tangent_angles, tangent_CPs, tangent_lines, tangent_errors, tangent_timings = polynomial_fit(
+            experimental_drop.drop_contour, polynomial_degree=1)
         experimental_drop.contact_angles['tangent fit'] = {}
         experimental_drop.contact_angles['tangent fit']['left angle'] = tangent_angles[0]
         experimental_drop.contact_angles['tangent fit']['right angle'] = tangent_angles[1]
@@ -21,7 +23,8 @@ def perform_fits(experimental_drop, tangent=False, polynomial=False, circle=Fals
         experimental_drop.contact_angles['tangent fit']['timings'] = tangent_timings
     if polynomial == True:
         from .polynomial_fit import polynomial_fit
-        polynomial_angles, polynomial_CPs, polynomial_lines, polynomial_errors, polynomial_timings = polynomial_fit(experimental_drop.drop_contour, polynomial_degree=2)
+        polynomial_angles, polynomial_CPs, polynomial_lines, polynomial_errors, polynomial_timings = polynomial_fit(
+            experimental_drop.drop_contour, polynomial_degree=2)
         experimental_drop.contact_angles['polynomial fit'] = {}
         experimental_drop.contact_angles['polynomial fit']['left angle'] = polynomial_angles[0]
         experimental_drop.contact_angles['polynomial fit']['right angle'] = polynomial_angles[1]
@@ -31,7 +34,8 @@ def perform_fits(experimental_drop, tangent=False, polynomial=False, circle=Fals
         experimental_drop.contact_angles['polynomial fit']['timings'] = polynomial_timings
     if circle == True:
         from .circular_fit import circular_fit
-        circle_angles, circle_center, circle_radius, circle_intercepts, circle_errors, circle_timings = circular_fit(experimental_drop.drop_contour)
+        circle_angles, circle_center, circle_radius, circle_intercepts, circle_errors, circle_timings = circular_fit(
+            experimental_drop.drop_contour)
         experimental_drop.contact_angles['circle fit'] = {}
         experimental_drop.contact_angles['circle fit']['left angle'] = circle_angles[0]
         experimental_drop.contact_angles['circle fit']['right angle'] = circle_angles[1]
@@ -42,7 +46,8 @@ def perform_fits(experimental_drop, tangent=False, polynomial=False, circle=Fals
         experimental_drop.contact_angles['circle fit']['timings'] = circle_timings
     if ellipse == True:
         from .ellipse_fit import ellipse_fit
-        ellipse_angles, ellipse_intercepts, ellipse_center, ellipse_ab, ellipse_rotation, ellipse_errors, ellipse_timings = ellipse_fit(experimental_drop.drop_contour)
+        ellipse_angles, ellipse_intercepts, ellipse_center, ellipse_ab, ellipse_rotation, ellipse_errors, ellipse_timings = ellipse_fit(
+            experimental_drop.drop_contour)
         experimental_drop.contact_angles['ellipse fit'] = {}
         experimental_drop.contact_angles['ellipse fit']['left angle'] = ellipse_angles[0]
         experimental_drop.contact_angles['ellipse fit']['right angle'] = ellipse_angles[1]
@@ -54,7 +59,8 @@ def perform_fits(experimental_drop, tangent=False, polynomial=False, circle=Fals
         experimental_drop.contact_angles['ellipse fit']['timings'] = ellipse_timings
     if YL == True:
         from .BA_fit import YL_fit
-        YL_angles, YL_Bo, YL_baselinewidth, YL_volume, YL_shape, YL_baseline, YL_errors, sym_errors, YL_timings = YL_fit(experimental_drop.drop_contour)
+        YL_angles, YL_Bo, YL_baselinewidth, YL_volume, YL_shape, YL_baseline, YL_errors, sym_errors, YL_timings = YL_fit(
+            experimental_drop.drop_contour)
         experimental_drop.contact_angles['YL fit'] = {}
         experimental_drop.contact_angles['YL fit']['left angle'] = YL_angles[0]
         experimental_drop.contact_angles['YL fit']['right angle'] = YL_angles[1]

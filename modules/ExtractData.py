@@ -2,6 +2,7 @@
 # coding=utf-8
 import numpy as np
 
+
 class ExtractedData(object):
     def __init__(self, n_frames, n_params):
         self.initial_image_time = None
@@ -12,13 +13,13 @@ class ExtractedData(object):
         self.area = np.zeros(n_frames)
         self.worthington = np.zeros(n_frames)
         self.parameters = np.zeros((n_frames, n_params))
-        self.contact_angles = np.zeros((n_frames,2))
+        self.contact_angles = np.zeros((n_frames, 2))
 
     def time_IFT_vol_area(self, i):
         # build the time-IFT-volume-area array used in the plotting function
         return [self.time[i], self.gamma_IFT_mN[i], self.volume[i], self.area[i]]
 
-    def export_data(self, input_file,filename,i):
+    def export_data(self, input_file, filename, i):
 
         # header and comment not supported for version number < 1.7
         # this is a hack routine to check this...
@@ -44,17 +45,19 @@ class ExtractedData(object):
 
         filename = './outputs/'+filename
         with open(filename, 'a') as f:
-            if i==0:
+            if i == 0:
                 f.write(string+'\n')
-            #for val in array[0]:
+            # for val in array[0]:
             for val in out:
                 f.write(str(val)+',')
             f.write('\n')
         if 0:
             try:
-                f = open(filename,'a')
-                np.savetxt(f, self.output_data(input_file,i), delimiter=',', fmt='%10.5f', header=self.header_string(i), comments='')
+                f = open(filename, 'a')
+                np.savetxt(f, self.output_data(input_file, i), delimiter=',',
+                           fmt='%10.5f', header=self.header_string(i), comments='')
                 f.close()
             except:
-                #np.savetxt(f, self.output_data(), delimiter=',', fmt='%10.5f')
-                np.savetxt(f, self.output_data(input_file,i), fmt='%10.5f') # was This
+                # np.savetxt(f, self.output_data(), delimiter=',', fmt='%10.5f')
+                np.savetxt(f, self.output_data(input_file, i),
+                           fmt='%10.5f')  # was This
